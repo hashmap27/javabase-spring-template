@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration scan="true" scanPeriod="5 seconds" debug="true">
+
+	<!-- 공통 환경변수 설정 -->
+	<property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} %-5level: %c{50}.%method\\(\\) (%file:%line\\) - %msg%n" />
+	<property name="LOG_CHARSET" value="UTF-8" />
+
+	<!-- Appenders 설정 -->
+	<!-- CONSOLE: 콘솔로 출력 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${LOG_PATTERN}</pattern>
+			<charset>${LOG_CHARSET}</charset>
+		</encoder>
+	</appender>
+
+	<logger name="org.apache.commons.beanutils.converters" level="INFO"/>
+	<logger name="org.apache.commons.beanutils" level="INFO"/>
+
+	<logger name="org.springframework.core.env" level="INFO"/>
+	<logger name="org.springframework" level="DEBUG"/>
+
+
+	<!-- ROOT LEVEL LOGGING 정책 설정 -->
+	<root level="TRACE">
+		<appender-ref ref="CONSOLE"/>
+	</root>
+
+</configuration>

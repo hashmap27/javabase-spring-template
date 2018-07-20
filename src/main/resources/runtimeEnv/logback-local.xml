@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<included scan="true" scanPeriod="2 seconds">
+
+	<!-- 환경변수 설정 -->
+	<property name="FILE_LOG_FOLDER" value="/log" />
+
+	<!-- 공용파일 -->
+	<include resource="runtimeEnv/logback.shared.xml" />
+
+	<!-- ================================================== -->
+	<!-- 개별 LOGGING 정책 설정 -->
+	<logger name="com.javabase" level="DEBUG" />
+
+	<!-- <logger name="framework.servlet.filter.wrap.AbleTeeServletOutputStream" level="DEBUG" />
+	<logger name="framework.spring.web.log.AbleControllerLoggingAspect" level="DEBUG" /> -->
+	<logger name="framework.security" level="DEBUG" />
+	<logger name="framework" level="DEBUG" />
+
+	<logger name="jdbc.sqlonly" level="ERROR" />
+	<logger name="jdbc.sqltiming" level="INFO" />
+	<logger name="jdbc.audit" level="ERROR" />
+	<logger name="jdbc.resultset" level="ERROR" />
+	<logger name="jdbc.resultsettable" level="INFO" />
+	<logger name="jdbc.connection" level="ERROR" />
+
+	<logger name="org.mybatis" level="INFO" />
+
+	<logger name="net.sf.ehcache" level="INFO" />
+	<logger name="org.redisson" level="INFO" />
+	<logger name="io.netty" level="INFO" />
+	<logger name="org.hibernate.validator.internal" level="INFO" />
+	<logger name="org.jboss.logging" level="INFO" />
+
+	<logger name="org.apache.tiles" level="INFO" />
+	<logger name="org.apache.ibatis.logging" level="INFO" />
+	<logger name="org.apache.commons.digester" level="INFO" />
+	<logger name="org.apache.http" level="INFO" />
+
+	<logger name="org.springframework.transaction.support" level="INFO" />
+	<logger name="org.springframework.transaction" level="INFO" />
+
+	<logger name="org.springframework.security.access.prepost" level="INFO" />
+	<logger name="org.springframework.security.access" level="INFO" />
+	<logger name="org.springframework.security.web.access.expression" level="INFO" />
+	<logger name="org.springframework.security.web.util.matcher" level="INFO" />
+	<logger name="org.springframework.security.web" level="INFO" />
+	<logger name="org.springframework.security" level="INFO" />
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="INFO" />
+	<logger name="org.springframework.web.servlet.mvc.WebContentInterceptor" level="INFO" />
+	<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />
+	<logger name="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" level="INFO" />
+	<logger name="org.springframework.web.servlet" level="INFO" />
+	<logger name="org.springframework.web.method" level="INFO" />
+	<logger name="org.springframework.web.context" level="INFO" />
+	<logger name="org.springframework.web" level="INFO" />
+
+	<logger name="org.springframework.aop.aspectj.annotation" level="INFO" />
+	<logger name="org.springframework.aop.framework" level="INFO" />
+
+	<logger name="org.springframework.beans" level="INFO" />
+	<logger name="org.springframework.jndi" level="INFO" />
+	<logger name="org.springframework.jdbc" level="INFO" />
+	<logger name="org.springframework.context" level="INFO" />
+	<logger name="org.springframework.core" level="INFO" />
+	<logger name="org.springframework" level="INFO" />
+
+	<!-- ================================================== -->
+	<!-- ROOT LEVEL LOGGING 정책 설정 -->
+	<root level="DEBUG">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="ROLLING_WARN" />
+		<appender-ref ref="SIFT_IP" />
+	</root>
+
+</included>
