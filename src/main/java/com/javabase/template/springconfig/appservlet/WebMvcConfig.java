@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
+
+import com.javabase.template.framework.converter.StringToJodaDateTimeConverter;
+import com.javabase.template.framework.converter.StringToJodaLocalDateTimeConverter;
 
 /**
  * servlet-context.xml의 역할을 대신하거나 보충하는 클래스
@@ -62,6 +66,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .mediaType("xml", MediaType.APPLICATION_XML)
                     .mediaType("json", MediaType.APPLICATION_JSON)
                     .defaultContentType(MediaType.TEXT_HTML);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToJodaDateTimeConverter());
+        registry.addConverter(new StringToJodaLocalDateTimeConverter());
     }
 
     @Override
