@@ -30,6 +30,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.view.xml.MappingJackson2XmlView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabase.template.framework.converter.StringToJodaDateTimeConverter;
 import com.javabase.template.framework.converter.StringToJodaLocalDateTimeConverter;
+import com.javabase.template.interceptor.TemplateInterceptor;
 
 /**
  * servlet-context.xml의 역할을 대신하거나 보충하는 클래스
@@ -66,6 +68,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired @Qualifier(value="jsonMapper") ObjectMapper jsonMapper;
     @Autowired @Qualifier(value="xmlMapper") ObjectMapper xmlMapper;
 
+    /** Content Negotiation */
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.ignoreAcceptHeader(false)                        //HttpReqeust Header의 Accept 무시여부
@@ -85,6 +88,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //Serialize시에는 다른 설정이 필요함.
         registry.addConverter(new StringToJodaDateTimeConverter());
         registry.addConverter(new StringToJodaLocalDateTimeConverter());
+    }
+
+    /** Interceptor 등록 */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new TemplateInterceptor());
     }
 
     @Override
