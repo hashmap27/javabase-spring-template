@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -60,7 +61,8 @@ import com.javabase.template.framework.converter.StringToJodaLocalDateTimeConver
 )
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Autowired ObjectMapper objectMapper;
+    @Autowired @Qualifier(value="jsonMapper") ObjectMapper jsonMapper;
+    @Autowired @Qualifier(value="xmlMapper") ObjectMapper xmlMapper;
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -146,7 +148,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         converters.add(formHttpMessageConverter);
 
         //FasterXML Jackson Databind를 이용한 JSON미디어 타입을 자바객체로 변환시 사용하는 클래스
-        MappingJackson2HttpMessageConverter json = new MappingJackson2HttpMessageConverter();
+        MappingJackson2HttpMessageConverter json = new MappingJackson2HttpMessageConverter(jsonMapper);
         //IE9에서 json을 iframe transport로 전송 시 파일로 저장하려는 버그 발생 -> text 미디어타입으로 처리
         List<MediaType> supportedMediaTypes = json.getSupportedMediaTypes();
         List<MediaType> newSupportedMediaTypes = new ArrayList<>();
@@ -157,7 +159,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         converters.add(json);
 
         //FasterXML Jackson XML Databind를 이용한 XML 미디어 타입을 자바객체로 변환시 사용하는 클래스
-        MappingJackson2XmlHttpMessageConverter xml = new MappingJackson2XmlHttpMessageConverter();
+        MappingJackson2XmlHttpMessageConverter xml = new MappingJackson2XmlHttpMessageConverter(xmlMapper);
         xml.setPrettyPrint(true);
         converters.add(xml);
     }
