@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.CacheControl;
@@ -45,6 +46,7 @@ import com.javabase.template.framework.converter.StringToJodaLocalDateTimeConver
  * @author Cheong SungHyun <hashmap27@gmail.com>
  */
 @Configuration
+@EnableAspectJAutoProxy
 @EnableWebMvc
 @ComponentScan(
         basePackages = "com.javabase",
