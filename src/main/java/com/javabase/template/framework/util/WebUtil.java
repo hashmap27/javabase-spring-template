@@ -5,11 +5,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 
 /**
  * Web 관련 헬퍼 객체
@@ -19,6 +21,40 @@ import org.springframework.http.MediaType;
 public class WebUtil {
 
     private WebUtil() { /*do nothing*/ }
+
+    private static final String LOCAL_IP = "127.0.0.1";
+
+    /**
+     * x-forwarded-for 헤더 또는 RemoteAddr 획득
+     * @param request 요청 객체
+     * @return 접속 Client IP
+     */
+    public static String getClientIP(ServletRequest request) {
+        //원격 접속 IP 획득
+        String ipAddress = null;
+        if(request instanceof HttpServletRequest) {
+            HttpServletRequest servletRequest = (HttpServletRequest) request;
+            ipAddress = servletRequest.getHeader("x-forwarded-for");    //WEB을 거쳐서 WAS에 온 경우 Origin IP
+            if(StringUtils.isEmpty(ipAddress)) {
+                ipAddress = servletRequest.getHeader("client-ip");
+            }
+            if(StringUtils.isEmpty(ipAddress)) {
+                ipAddress = servletRequest.getHeader("Proxy-Client-IP");
+            }
+            if(StringUtils.isEmpty(ipAddress)) {
+                ipAddress = request.getRemoteAddr();
+            }
+        }
+
+        if(ipAddress != null && ipAddress.indexOf(',') >= 0) {
+            ipAddress = ipAddress.substring(0, ipAddress.indexOf(','));
+        }
+        if("0:0:0:0:0:0:0:1".equals(ipAddress)) {
+            ipAddress = LOCAL_IP;
+        }
+
+        return ipAddress;
+    }
 
     /** POST Form 요청인가 확인 */
     public static boolean isFormPost(HttpServletRequest request) {
