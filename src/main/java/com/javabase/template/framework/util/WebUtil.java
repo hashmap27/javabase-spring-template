@@ -24,6 +24,35 @@ public class WebUtil {
 
     private static final String LOCAL_IP = "127.0.0.1";
 
+    /**  실행중인 WAS의 Container명 획득 */
+    public static String getWasContainerName() {
+        //Weblogic WAS Container Name
+        String name = System.getProperty("weblogic.Name");
+        if(!StringUtils.isEmpty(name)) {
+            return name;
+        }
+        //NOTE: 다른 WAS 컨테이너에 대한 대응 필요시 여기 추가.
+        return "";
+    }
+
+    /** WEB Proxy를 통한 접근인가? */
+    public static boolean isProxyRequest(HttpServletRequest request) {
+        String clientIP = request.getHeader("client-ip");   //L7을 통한 경우 L7-WEB-WAS
+        String proxyClientIp = request.getHeader("Proxy-Client-IP");
+        String xForwardedFor = request.getHeader("X-Forwarded-For");
+
+        return !StringUtils.isEmpty(clientIP) || !StringUtils.isEmpty(proxyClientIp) || !StringUtils.isEmpty(xForwardedFor) ? true : false;
+    }
+
+    /** LocalHost, LocalIP 를 통한 접근? */
+    public static boolean isLocalhostRequest(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String localAddr = request.getLocalAddr();
+        //remoteAddr == localAddr : LocalIP를 통한 접근
+        //0:0:0:0:0:0:0:1 == remoteAddr : LocalHost를 통한 접근
+        return remoteAddr.equals(localAddr) || "0:0:0:0:0:0:0:1".equals(remoteAddr) ? true : false;
+    }
+
     /**
      * x-forwarded-for 헤더 또는 RemoteAddr 획득
      * @param request 요청 객체
