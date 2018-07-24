@@ -28,7 +28,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
         sb.append("\r\n- JavaBase Spring Configuration Template Start Up");
         sb.append("\r\n- " + DateTime.now());
         sb.append("\r\n=====================================");
-        logger.warn(sb.toString());
+        logger.debug(sb.toString());
     }
 
     @Override

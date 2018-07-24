@@ -3,7 +3,7 @@
 <included scan="true" scanPeriod="2 seconds">
 
 	<!-- 환경변수 설정 -->
-	<property name="FILE_LOG_FOLDER" value="/log" />
+	<property name="FILE_LOG_FOLDER" value="./logs" />
 
 	<!-- 공용파일 -->
 	<include resource="runtimeEnv/logback.shared.xml" />
@@ -73,7 +73,7 @@
 		<appender-ref ref="FILE" />
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="ROLLING_WARN" />
-		<appender-ref ref="SIFT_IP" />
+		<!-- <appender-ref ref="SIFT_IP" /> -->
 	</root>
 
 </included>
