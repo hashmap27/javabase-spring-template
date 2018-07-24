@@ -11,9 +11,9 @@
 	<!-- ================================================== -->
 	<!-- 개별 LOGGING 정책 설정 -->
 	<logger name="com.javabase" level="DEBUG" />
+    <logger name="com.javabase.template.framework.web.log.ControllerLoggingAspect" level="DEBUG" />
 
-	<!-- <logger name="framework.servlet.filter.wrap.AbleTeeServletOutputStream" level="DEBUG" />
-	<logger name="framework.spring.web.log.AbleControllerLoggingAspect" level="DEBUG" /> -->
+	<!-- <logger name="framework.servlet.filter.wrap.AbleTeeServletOutputStream" level="DEBUG" /> -->
 	<logger name="framework.security" level="DEBUG" />
 	<logger name="framework" level="DEBUG" />
 

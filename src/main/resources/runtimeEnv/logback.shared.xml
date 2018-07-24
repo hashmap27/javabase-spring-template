@@ -59,9 +59,9 @@
 	</appender>
 
 	<!-- SIFT_IP: req.clientIp - IP별 로깅 -->
-	<appender name="SIFT_IP" class="ch.qos.logback.classic.sift.SiftingAppender">
+	<!-- <appender name="SIFT_IP" class="ch.qos.logback.classic.sift.SiftingAppender">
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-			<evaluator> <!-- default: ch.qos.logback.classic.boolex.JaninoEvaluatorFilter -->
+			<evaluator> default: ch.qos.logback.classic.boolex.JaninoEvaluatorFilter
 				<expression>return mdc.get("req.clientIp") != null;</expression>
 			</evaluator>
 			<OnMismatch>DENY</OnMismatch>
@@ -87,13 +87,13 @@
 				</encoder>
 			</appender>
 		</sift>
-	</appender>
+	</appender> -->
 
 	<!-- MARKER별 로깅 ============================================================== -->
 	<!-- ROLLING.POS: POS 마커 일자별 로깅 (지난파일 압축하여 N개유지) -->
-	<appender name="ROLLING.POS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!-- <appender name="ROLLING.POS" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-			<evaluator> <!-- default: ch.qos.logback.classic.boolex.JaninoEvaluatorFilter -->
+			<evaluator> default: ch.qos.logback.classic.boolex.JaninoEvaluatorFilter
 				<expression>return marker != null &amp;&amp; marker.contains("POS");</expression>
 			</evaluator>
 			<OnMismatch>DENY</OnMismatch>
@@ -109,6 +109,6 @@
 			<pattern>${LOG_PATTERN}</pattern>
 			<charset>${LOG_CHARSET}</charset>
 		</encoder>
-	</appender>
+	</appender> -->
 
 </included>
