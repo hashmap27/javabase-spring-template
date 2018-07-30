@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="base">
+
+	<sql id="dummy">
+		SELECT 1
+	</sql>
+
+	<!-- 전체 건수 획득 감싸기 -->
+	<sql id="countStart">
+		SELECT COUNT(*) AS total FROM (
+	</sql>
+	<sql id="countEnd">
+		) I
+	</sql>
+
+	<!-- Pagination 감싸기 MYSQL -->
+	<sql id="pagingStart">
+		SELECT * FROM (
+	</sql>
+	<sql id="pagingEnd">
+		) I LIMIT #{page.pageSize} OFFSET #{page.offset}
+	</sql>
+
+</mapper>
