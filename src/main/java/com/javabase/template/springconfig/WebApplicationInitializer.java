@@ -10,6 +10,7 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.javabase.template.springconfig.appservlet.WebMvcConfig;
+import com.javabase.template.springconfig.root.DataConfig;
 import com.javabase.template.springconfig.root.RootConfig;
 
 /**
@@ -34,6 +35,7 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?> [] {
+            DataConfig.class,
             RootConfig.class
         };
     }
