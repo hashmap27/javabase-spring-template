@@ -66,7 +66,7 @@ public class ConvertUtil {
     /**
      * boolean 획득 ('y', 'true', '1'이면 true / 'n', 'false', 0'이면 false / 이외에는 기본값)
      */
-    public static Boolean toBool(String value, Boolean defaultValue) {
+    public static Boolean toBoolean(String value, Boolean defaultValue) {
         Boolean boolValue = toBoolean(value);
         if(boolValue == null) {
             return defaultValue;
