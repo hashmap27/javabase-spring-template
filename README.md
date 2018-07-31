@@ -17,6 +17,10 @@
 
 * 주요 사항
     * web.xml을 사용하지 않음.
+    * root-context.xml, servlet-context.xml을 모두 Javabase로 구현하였음.
+    * xml 방식은 Spring 재단에서도 지양하고 있으며 학습곡선이 매우 큼
+    * Javabase기반 방식은 컴파일 단계에서 에러가 발견되기 때문에
+
 ```
 <!-- web.xml 제거를 위해 추가. -->
 <plugin>
@@ -28,9 +32,6 @@
     </configuration>
 </plugin>
 ```
-    * root-context.xml, servlet-context.xml을 모두 Javabase로 구현하였음.
-    * xml 방식은 Spring 재단에서도 지양하고 있으며 학습곡선이 매우 큼
-    * Javabase기반 방식은 컴파일 단계에서 에러가 발견되기 때문에
 
 * 주요 종속성
     * Spring framework: 5.0.7.RELEASE
