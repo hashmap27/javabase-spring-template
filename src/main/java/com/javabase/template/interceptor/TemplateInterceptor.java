@@ -29,8 +29,7 @@ public class TemplateInterceptor extends HandlerInterceptorAdapter {
             logger.debug(sb.toString());
             return true;
         } catch(Exception ex) {
-            logger.debug("\r\b### Filter Result: preHandler Exception");
-            logger.debug("***  - exception info: {}" + ex.getMessage(), ex);
+            logger.debug("\r\n### Filter Result: preHandler Exception\r\n***  - exception info: {}" + ex.getMessage(), ex);
             throw ex;
         }
     }
