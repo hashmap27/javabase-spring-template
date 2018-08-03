@@ -47,6 +47,14 @@ public class ControllerLoggingAspect {
     /** RequestMapping 어노테이션이 붙은 메서드를 대상으로 조인포인트 선택 */
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void requestMapping() { /** AOP PointCut */ }
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+    public void getMapping() { /** AOP PointCut */ }
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+    public void postMapping() { /** AOP PointCut */ }
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
+    public void putMapping() { /** AOP PointCut */ }
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+    public void deleteMapping() { /** AOP PointCut */ }
 
     /**
      * 로깅정책 Annotation에서 로깅 Marker 획득(없이면 null)
@@ -56,7 +64,7 @@ public class ControllerLoggingAspect {
      * JoinPoint전에 실행. 예외가 발생하는 경우만 제외하고 항상 실행
      * 컨트롤러 호출 시 동작을 의도함.
      */
-    @Before("(controller() || restController()) && methodPointcut() && requestMapping()")
+    @Before("(controller() || restController()) && methodPointcut() && (requestMapping() || getMapping() || postMapping() || putMapping() || deleteMapping())")
     public void beforControllerMethod(JoinPoint joinPoint) {
         logger.debug(LINEBREAK_TAB + LINE + "\r\n\t## START " + niceNameForStart(joinPoint));
     }
@@ -65,7 +73,7 @@ public class ControllerLoggingAspect {
      * JoinPoint가 정상적으로 종료된 후 실행. 예외가 발생하면 실행되지 않음.
      * 컨트롤러 호출 후 동작을 의도함.
      */
-    @AfterReturning(pointcut = "(controller() || restController()) && methodPointcut() && requestMapping()", returning = "returnValue")
+    @AfterReturning(pointcut = "(controller() || restController()) && methodPointcut() && (requestMapping() || getMapping() || postMapping() || putMapping() || deleteMapping())", returning = "returnValue")
     public void afterControllerMethod(JoinPoint joinPoint, Object returnValue) {
         logger.debug("\r\n\t## END " + niceNameForEnd(joinPoint, returnValue) + LINEBREAK_TAB + LINE);
     }
@@ -74,7 +82,7 @@ public class ControllerLoggingAspect {
      * JoinPoint에서 예외가 발생했을 때 실행. 예외가 발생하지 않고 정상적으로 종료하면 실행되지 않음.
      * 컨트롤러 호출 중 에러에 반응하도록 동작을 의도.
      */
-    @AfterThrowing(pointcut = "(controller() || restController()) && methodPointcut() && requestMapping()", throwing = "ex")
+    @AfterThrowing(pointcut = "(controller() || restController()) && methodPointcut() && (requestMapping() || getMapping() || postMapping() || putMapping() || deleteMapping())", throwing = "ex")
     public void afterThrowing(JoinPoint joinPoint, Throwable ex) {
         logger.debug("\r\n\t## EXCEPTION AT " + niceNameForException(joinPoint, ex) + LINEBREAK_TAB + LINE);
     }
@@ -84,12 +92,17 @@ public class ControllerLoggingAspect {
      */
     private String niceNameForStart(JoinPoint joinPoint) {
         return joinPoint.getTarget().getClass().getSimpleName() + "#"
-                + joinPoint.getSignature().getName() + "";
+                + joinPoint.getSignature().getName() + argsToString(joinPoint.getArgs());
     }
+    /**
+     * Method Arguments의 로깅내용 획득
+     * @param arg Arguments
+     * @return 로깅 문자열
+     */
     private String argsToString(Object[] args) {
         StringBuilder sb = new StringBuilder();
         if(args == null || args.length == 0) {
-            return "\t\tno arguments.";
+            return "\t\t - <no arguments.>";
         }
         for(int i=0; i< args.length; i++) {
             sb.append(String.format("%n\t##  - args[%d]: %s", i, argToString(args[i])));
